@@ -1,2 +1,2 @@
 # odin-binary-search-tree-practice
-Odin Project, A Bit of Computer Science, Project 4: Binary Search Tree
+Practice with creating a Binary Search Tree class.
