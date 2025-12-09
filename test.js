@@ -68,6 +68,7 @@ console.log(tree.depth(11));
 console.log();
 
 
+prettyPrint(tree.root);
 console.log("isBalanced(): true");
 console.log(tree.isBalanced());
 console.log("add a 9999 and 99999 to unbalance tree");

@@ -225,15 +225,20 @@ class Tree {
             return height;
         }
         else {
-            // value equals currNode, found node, set height to 0 so it can start incrementing normally
+            // value was found, so focus on finding max height
+            if(height >= 0) {
+                return Math.max(this.findHeight(currNode.left, value, height + 1), this.findHeight(currNode.right, value, height + 1));
+            }
+
+            // value equals currNode, found value, set height to 0 so it can start incrementing normally
             if(value === currNode.value) {
                 return Math.max(this.findHeight(currNode.left, value, 0), this.findHeight(currNode.right, value, 0));
             }
-            // value is less than currNode, go left
+            // value is less than currNode, go left (still searching for value)
             else if(value < currNode.value) {
                 return this.findHeight(currNode.left, value, height + 1);
             }
-            // value is greater than currNode, go right
+            // value is greater than currNode, go right (still searching for value)
             else {
                 return this.findHeight(currNode.right, value, height + 1);
             }
@@ -298,11 +303,6 @@ class Tree {
                 const leftHeight = this.findHeight(leftNode, leftNode.value, 0);
                 const rightHeight = this.findHeight(rightNode, rightNode.value, 0);
                 const balanced = Math.abs(leftHeight - rightHeight) <= 1;
-
-                console.log(currNode.value);
-                console.log(leftHeight);
-                console.log(rightHeight);
-                console.log();
 
                 // recurse through rest of tree to check if rest of nodes are balanced
                 const leftCheckBal = this.checkBalance(currNode.left);
