@@ -68,13 +68,25 @@ console.log(tree.depth(11));
 console.log();
 
 
+console.log("for reference:");
 prettyPrint(tree.root);
 console.log("isBalanced(): true");
 console.log(tree.isBalanced());
-console.log("add a 9999 and 99999 to unbalance tree");
+console.log("add a 9999, 99999, 999999 to unbalance tree");
 tree.insert(9999);
 tree.insert(99999);
+tree.insert(999999);
 prettyPrint(tree.root);
 console.log("isBalanced(): false");
+console.log(tree.isBalanced());
+console.log();
+
+
+console.log("before rebalance():");
+prettyPrint(tree.root);
+console.log("after: rebalance()");
+tree.rebalance();
+prettyPrint(tree.root);
+console.log("isBalanced() check");
 console.log(tree.isBalanced());
 console.log();

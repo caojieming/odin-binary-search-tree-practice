@@ -134,15 +134,23 @@ class Tree {
 
 
     levelOrderForEach(callback) {
-        // 2d array, first index is the layer/level of node in the BST (starting at 0 for the root), second index is from left to right order within the level
-        const levelList = [];
+        // check if callback is a function, throw an error if it isn't
+        try {
+            checkCallback(callback);
 
-        // directly generates bfs list in levelList
-        this.bfs(this.root, 0, levelList);
+            // 2d array, first index is the layer/level of node in the BST (starting at 0 for the root), second index is from left to right order within the level
+            const levelList = [];
 
-        // flatten levelList into 1d array, then apply callback function to all nodes
-        const levelOrder = levelList.flat();
-        levelOrder.forEach((e) => callback(e));
+            // directly generates bfs list in levelList
+            this.bfs(this.root, 0, levelList);
+
+            // flatten levelList into 1d array, then apply callback function to all nodes
+            const levelOrder = levelList.flat();
+            levelOrder.forEach((e) => callback(e));
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
     bfs(currNode, currLevel, levelList) {
         // base case, stop/do nothing
@@ -164,7 +172,13 @@ class Tree {
 
 
     inOrderForEach(callback) {
-        this.dfsInOrder(this.root, callback);
+        // check if callback is a function, throw an error if it isn't
+        try {
+            checkCallback(callback);
+            this.dfsInOrder(this.root, callback);
+        } catch(e) {
+            console.error(e);
+        }
     }
     dfsInOrder(currNode, callback) {
         // base case, stop/do nothing
@@ -180,7 +194,13 @@ class Tree {
 
 
     preOrderForEach(callback) {
-        this.dfsPreOrder(this.root, callback);
+        // check if callback is a function, throw an error if it isn't
+        try {
+            checkCallback(callback);
+            this.dfsPreOrder(this.root, callback);
+        } catch(e) {
+            console.error(e);
+        }
     }
     dfsPreOrder(currNode, callback) {
         // base case, stop/do nothing
@@ -196,7 +216,13 @@ class Tree {
 
 
     postOrderForEach(callback) {
-        this.dfsPostOrder(this.root, callback);
+        // check if callback is a function, throw an error if it isn't
+        try {
+            checkCallback(callback);
+            this.dfsPostOrder(this.root, callback);
+        } catch(e) {
+            console.error(e);
+        }
     }
     dfsPostOrder(currNode, callback) {
         // base case, stop/do nothing
@@ -315,9 +341,24 @@ class Tree {
 
 
     rebalance() {
-
+        let treeArr = [];
+        this.arrayFromNode(treeArr, this.root);
+        treeArr.sort();
+        this.root = this.buildTree(treeArr);
+    }
+    arrayFromNode(array, currNode) {
+        // base case, stop/do nothing
+        if(currNode === null) {
+            return;
+        }
+        else {
+            array.push(currNode.value);
+            this.arrayFromNode(array, currNode.left);
+            this.arrayFromNode(array, currNode.right);
+        }
     }
 }
+
 
 function prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
@@ -329,5 +370,12 @@ function prettyPrint(node, prefix = '', isLeft = true) {
     console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
     if (node.left !== null) {
         prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
+}
+
+
+function checkCallback(callback) {
+    if (typeof callback !== 'function') {
+        throw new Error("A callback function is required!");
     }
 }
